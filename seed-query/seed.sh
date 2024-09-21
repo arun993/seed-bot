@@ -30,9 +30,10 @@ install_python_modules() {
     fi
 }
 
-# Function to clone the repository
+# Function to clone the latest repository (delete old if exists)
 clone_repo() {
-    printf "Cloning repository...\n"
+    printf "Cloning the latest repository...\n"
+    rm -rf seed-bot  # Ensure the old repo is deleted
     if ! git clone "$REPO_URL"; then
         printf "Failed to clone repository.\n" >&2
         return 1
