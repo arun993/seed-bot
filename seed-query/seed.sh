@@ -35,14 +35,6 @@ check_python_version() {
     fi
 }
 
-# Function to install Python modules
-install_requirements() {
-    pip3 install requests colorama pytz
-    if [[ $? -ne 0 ]]; then
-        printf "Failed to install required Python modules\n" >&2
-        return 1
-    fi
-}
 
 # Function to prompt user input and save to query.txt
 get_user_input() {
@@ -50,6 +42,14 @@ get_user_input() {
     cat > "$QUERY_FILE"
     if [[ ! -s "$QUERY_FILE" ]]; then
         printf "Input was empty or file was not created successfully\n" >&2
+        return 1
+    fi
+}
+# Function to install Python modules
+install_requirements() {
+    pip3 install requests colorama pytz
+    if [[ $? -ne 0 ]]; then
+        printf "Failed to install required Python modules\n" >&2
         return 1
     fi
 }
