@@ -37,7 +37,7 @@ check_python_version() {
 
 # Function to install Python modules
 install_requirements() {
-    pip3 install requests colorama
+    pip3 install requests colorama pytz
     if [[ $? -ne 0 ]]; then
         printf "Failed to install required Python modules\n" >&2
         return 1
