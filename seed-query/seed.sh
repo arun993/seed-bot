@@ -1,8 +1,11 @@
 #!/bin/bash
 
+# Clean up any previous runs
+rm -rf seed-bot seed.sh
+
 # Global variables
 REPO_URL="https://github.com/arun993/seed-bot.git"
-REPO_DIR="seed-bot"
+REPO_DIR="seed-bot/seed-query"
 QUERY_FILE="query.txt"
 
 # Function to check if Python 3.10+ is installed
@@ -34,7 +37,7 @@ clone_repo() {
     else
         printf "Cloning repository...\n"
         git clone "$REPO_URL" && cd "$REPO_DIR" || {
-            printf "Failed to clone repository.\n" >&2
+            printf "Failed to clone repository or navigate to directory.\n" >&2
             return 1
         }
     fi
