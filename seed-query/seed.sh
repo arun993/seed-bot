@@ -32,14 +32,19 @@ install_python_modules() {
 
 # Function to clone the repository
 clone_repo() {
-    if [[ -d "$REPO_DIR" ]]; then
-        printf "Directory '%s' already exists, skipping clone.\n" "$REPO_DIR"
-    else
-        printf "Cloning repository...\n"
-        git clone "$REPO_URL" && cd "$REPO_DIR" || {
-            printf "Failed to clone repository or navigate to directory.\n" >&2
-            return 1
-        }
+    printf "Cloning repository...\n"
+    if ! git clone "$REPO_URL"; then
+        printf "Failed to clone repository.\n" >&2
+        return 1
+    fi
+}
+
+# Function to change to the correct directory
+change_directory() {
+    printf "Changing to directory '%s'...\n" "$REPO_DIR"
+    if ! cd "$REPO_DIR"; then
+        printf "Failed to change directory to '%s'.\n" "$REPO_DIR" >&2
+        return 1
     fi
 }
 
@@ -71,6 +76,7 @@ main() {
     check_python_version || exit 1
     install_python_modules || exit 1
     clone_repo || exit 1
+    change_directory || exit 1
     save_user_input || exit 1
     run_python_script || exit 1
 }
